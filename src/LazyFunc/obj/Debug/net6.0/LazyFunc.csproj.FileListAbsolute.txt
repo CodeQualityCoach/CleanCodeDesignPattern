@@ -1,0 +1,17 @@
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\LazyFunc.exe
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\LazyFunc.deps.json
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\LazyFunc.runtimeconfig.json
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\LazyFunc.dll
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\LazyFunc.pdb
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\bin\Debug\net6.0\StructureMap.dll
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.csproj.AssemblyReference.cache
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.AssemblyInfoInputs.cache
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.AssemblyInfo.cs
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.csproj.CoreCompileInputs.cache
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.csproj.CopyComplete
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.dll
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\refint\LazyFunc.dll
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.pdb
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\LazyFunc.genruntimeconfig.cache
+C:\Workspace\Workshop-Templates\Workshop-CleanCode-Template\src\LazyFunc\obj\Debug\net6.0\ref\LazyFunc.dll
