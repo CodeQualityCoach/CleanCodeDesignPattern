@@ -1,6 +1,0 @@
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\bin\Debug\Person.dll
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\bin\Debug\Person.pdb
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\obj\Debug\Person.csproj.AssemblyReference.cache
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\obj\Debug\Person.csproj.CoreCompileInputs.cache
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\obj\Debug\Person.dll
-C:\Workspace\AIS\RefactorToCleanerCode\src\Person\obj\Debug\Person.pdb
