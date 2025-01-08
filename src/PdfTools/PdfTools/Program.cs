@@ -11,6 +11,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using NLog;
 using QRCoder;
+using static PdfTools.BatchCommand.CombineStrategy;
 using Image = iTextSharp.text.Image;
 
 namespace PdfTools
@@ -126,14 +127,21 @@ namespace PdfTools
             }
         }
 
-        public class CombineStrategy : ICommand
+        public class CombineStrategy : ICommand<CombineStrategy.CombineStrategyParameter>
         {
-            public bool CanExecute(string[] context)
+            public class CombineStrategyParameter
             {
-                return string.Equals(context[0], "combine", StringComparison.CurrentCultureIgnoreCase) && context.Length >= 3;
+                public string Name { get; set; }
+                public string MergedFile { get; set; }
+                public List<string> SourceFiles { get; set; }
             }
 
-            public void Execute(string[] context)
+            public bool CanExecute(CombineStrategyParameter context)
+            {
+                return string.Equals(context.Name, "combine", StringComparison.CurrentCultureIgnoreCase);
+            }
+
+            public void Execute(CombineStrategyParameter context)
             {
                 CombineMultiplePDF(context.Skip(2).ToArray(), context[1]);
             }
@@ -198,6 +206,8 @@ namespace PdfTools
             {
                 // todo RW: fix me
                 //_logger.Trace("Creating pdf for a markdown file");
+
+                //File.Append("c:\\pdftool.log", "Creating pdf for a markdown file");
 
                 var inFile = args[1];
                 var outFile = args[2];
