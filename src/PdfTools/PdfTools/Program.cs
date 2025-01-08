@@ -50,7 +50,6 @@ namespace PdfTools
             return string.Equals(context[0], "addcode", StringComparison.CurrentCultureIgnoreCase) && context.Length == 4;
         }
 
-
         public void Execute(string[] context)
         {
             var enhancer = new PdfCodeEnhancer(context[2]);
@@ -132,28 +131,30 @@ namespace PdfTools
     //    }
     //}
 
-    //public class CreateStrategy : ICommand
-    //{
-    //    public void Execute(string[] argsWithoutCommand)
-    //    {
-    //        DoCreate(argsWithoutCommand);
-    //    }
-    //    private static void DoCreate(string[] args)
-    //    {
-    //        if (args.Length != 2)
-    //            throw new ArgumentException("at least in and out parameter is required");
+    public class CreateStrategy : ICommand
+    {
+        public bool CanExecute(string[] context)
+        {
+            return string.Equals(context[0], "create", StringComparison.CurrentCultureIgnoreCase) && context.Length == 3;
+        }
 
-    //        //_logger.Trace("Creating pdf for a markdown file");
+        public void Execute(string[] context)
+        {
+            DoCreate(context);
+        }
+        private static void DoCreate(string[] args)
+        {
+            //_logger.Trace("Creating pdf for a markdown file");
 
-    //        var inFile = args[0];
-    //        var outFile = args[1];
+            var inFile = args[1];
+            var outFile = args[2];
 
-    //        var mdText = File.ReadAllText(inFile);
-    //        var mdDoc = Markdown.Parse(mdText);
+            var mdText = File.ReadAllText(inFile);
+            var mdDoc = Markdown.Parse(mdText);
 
-    //        MarkdownPdf.Write(mdDoc, outFile);
-    //    }
-    //}
+            MarkdownPdf.Write(mdDoc, outFile);
+        }
+    }
 
     public class Program
     {
@@ -188,51 +189,6 @@ namespace PdfTools
 
             theAction.Execute(args);
 
-            //if (args.Length == 0)
-            //    throw new ArgumentException("at least an action is required");
-
-            //var action = args[0].ToLower();
-
-            //ICommand theAction = null;
-
-            //var actionDictionary = new Dictionary<string, IStrategy>() {
-            //    { "download", new DownloadStrategy() },
-            //    { "addcode", new AddCodeStrategy() },
-            //    { "archive", new ArchiveStrategy() }
-            //};
-            //theAction = actionDictionary[action];
-            //theAction.Do(args.Skip(1).ToArray());
-
-            // markdown-in, pdf-out
-            //if (string.Equals(action, "create", StringComparison.CurrentCultureIgnoreCase))
-            //    theAction = new CreateStrategy();
-
-            //// pdf-in, qrcodetext, optional outfile
-            //if (string.Equals(action, "addcode", StringComparison.CurrentCultureIgnoreCase))
-            //{
-            //    theAction = new AddCodeStrategy();
-            //}
-
-            //// url, outfile
-            //if (string.Equals(action, "download", StringComparison.CurrentCultureIgnoreCase))
-            //{
-            //    theAction = new DownloadStrategy();
-            //}
-
-            //// url, outfile
-            //if (string.Equals(action, "archive", StringComparison.CurrentCultureIgnoreCase))
-            //{
-            //   theAction = new ArchiveStrategy();
-            //}
-
-            ////// url, outfile
-            //if (string.Equals(action, "combine", StringComparison.CurrentCultureIgnoreCase))
-            //{
-            //    theAction = new CombineStrategy();
-            //}
-
-            // Strategy nutzen ohne implementierung zu kennen
-            theAction.Execute(args);
 
 #if DEBUG
             Console.ReadKey();
