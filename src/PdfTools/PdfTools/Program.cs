@@ -140,7 +140,7 @@ namespace PdfTools
 
             private static void CombineMultiplePDF(string[] fileNames, string outFile)
             {
-                // todo_RW: fix me
+                // todo RW: fix me
                 // _logger.Trace($"Combile multiple pdf files {string.Join(",", fileNames)} into {outFile}");
 
                 // step 1: creation of a document-object
@@ -196,7 +196,7 @@ namespace PdfTools
             }
             private static void DoCreate(string[] args)
             {
-                // todo_RW: fix me
+                // todo RW: fix me
                 //_logger.Trace("Creating pdf for a markdown file");
 
                 var inFile = args[1];
@@ -211,12 +211,12 @@ namespace PdfTools
 
         public class Program
         {
-            // todo_RW: fix me
+            // todo RW: fix me
             private static Logger _logger;
 
             public static void Main(string[] args)
             {
-                // todo_RW: fix me
+                // todo RW: fix me
                 _logger = NLog.LogManager.GetCurrentClassLogger();
 
 #if DEBUG
