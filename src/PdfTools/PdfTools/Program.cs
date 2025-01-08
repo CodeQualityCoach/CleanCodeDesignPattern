@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using FSharp.Markdown;
 using FSharp.Markdown.Pdf;
 using iTextSharp.text;
@@ -26,14 +25,16 @@ namespace PdfTools
     {
 
         private readonly ICommand[] command;
+        private readonly string name;
 
-        public BatchCommand(params ICommand[] command)
+        public BatchCommand(string name, params ICommand[] command)
         {
+            this.name = name;
             this.command = command;
         }
         public bool CanExecute(string[] context)
         {
-            return command.All(c => c.CanExecute(context));
+            return string.Equals(context[0], name, StringComparison.CurrentCultureIgnoreCase) && command.All(c => c.CanExecute(context));
         }
 
         public void Execute(string[] context)
@@ -231,7 +232,7 @@ namespace PdfTools
 
 
                 var commands = new List<ICommand>() {
-                    new BatchCommand(new DownloadStrategy(), new AddCodeStrategy()),
+                    new BatchCommand("daac", new DownloadStrategy(), new AddCodeStrategy()),
                     new DownloadAndAddCodeCommand(),
                     new DownloadStrategy(),
                     new AddCodeStrategy(),
@@ -248,10 +249,6 @@ namespace PdfTools
                     ?? new EmptyCommand();
 
                 theAction.Execute(args);
-
-
-
-
 
 
 
@@ -359,3 +356,4 @@ namespace PdfTools
             }
         }
     }
+}
