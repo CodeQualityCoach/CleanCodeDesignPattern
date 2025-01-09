@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using Castle.Core.Logging;
 using PdfTools.Commands;
 using PdfTools.Logging;
+using PdfTools.ServiceLocator;
 
 namespace PdfTools
 {
     public class Program
     {
-        //private static IPtLogger _logger;
-        private static IPtLogger _logger;
-
         public static void Main(string[] args)
         {
-            // logik für Objekterstellung
-            var factory = new PtLoggerFactory();
-            _logger = factory.CreateLogger();
 
 #if DEBUG
             // just a hack in case you hit play in VS
@@ -33,46 +27,25 @@ namespace PdfTools
                 Console.WriteLine(arg);
             }
 
-
-            var commands = new List<ICommand>() {
-                new BatchCommand("daac", new DownloadCommand(_logger), new AddCodeCommand()),
-                new DownloadAndAddCodeCommand(new DownloadCommand(_logger), new AddCodeCommand()),
-                new DownloadCommand(_logger),
-                new AddCodeCommand(),
-                new ArchiveCommand(),
-                new CombineCommand(_logger),
-                new CreateCommand(factory.CreateLogger())
-            };
-
-            // we solve a problem:
-            //  * argument out of range exception (each command checks for array length)
-            //  * but what about null?
+            var commands = PtServiceLocator.GetCommands();
 
             var theAction = commands.FirstOrDefault(c => c.CanExecute(args))
                             ?? new EmptyCommand();
 
+            // Logge das gefundene Command fürs Tracing
+            var factory = PtServiceLocator.GetLoggerFactory();
+            var logger = factory.CreateLogger();
+            logger.Trace("Found Action: " + theAction.GetType().FullName);
+
             theAction.Execute(args);
 
-
+            // Execute war während Mitternacht
+            logger = factory.CreateLogger();
+            logger.Trace("Action executed");
 
 #if DEBUG
             Console.ReadKey();
 #endif
-        }
-    }
-
-    public interface IPtLoggerFactory
-    {
-        IPtLogger CreateLogger();
-    }
-
-    public class PtLoggerFactory : IPtLoggerFactory
-    {
-        public IPtLogger CreateLogger()
-        {
-            var dailyFileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
-            var fileName = Path.Combine(Path.GetTempPath(), dailyFileName);
-            return new PtFileLogger(fileName);
         }
     }
 }
