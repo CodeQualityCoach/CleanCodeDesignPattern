@@ -13,19 +13,20 @@ namespace PdfTools.PdfServices
     {
         private readonly string _tempFile;
         private readonly IPtLogger _logger;
+        private readonly IPtWebReader _ptWebReader;
 
         //public PdfArchiver(IPtLogger logger) // statisch (aus Prozessicht)
-        public PdfArchiver(IPtLoggerFactory loggerFactory) // dynamischen Logger
+        public PdfArchiver(IPtLoggerFactory loggerFactory, IPtWebReader ptWebReader = null) // dynamischen Logger
         {
             _tempFile = Path.GetTempFileName();
             _logger = loggerFactory.CreateLogger();
+
+            _ptWebReader = ptWebReader ?? new PtWebReader();
         }
 
         public void Archive(string url)
         {
-            var client = new HttpClient();
-            var response = client.GetAsync(url).Result;
-            var pdf = response.Content.ReadAsByteArrayAsync().Result;
+            var pdf = _ptWebReader.GetPdf(url);
 
             var tmpTempFile = Path.GetTempFileName();
             File.WriteAllBytes(tmpTempFile, pdf);
@@ -62,5 +63,20 @@ namespace PdfTools.PdfServices
         {
             File.Copy(_tempFile, destFile, true);
         }
+    }
+
+    public class PtWebReader : IPtWebReader
+    {
+        public byte[] GetPdf(string url)
+        {
+            var client = new HttpClient();
+            var response = client.GetAsync(url).Result;
+            return response.Content.ReadAsByteArrayAsync().Result;
+        }
+    }
+
+    public interface IPtWebReader
+    {
+        byte[] GetPdf(string url);
     }
 }
