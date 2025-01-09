@@ -146,13 +146,14 @@
     <Compile Include="Commands\EmptyCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\BatchCommand.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\EmptyPtLogger.cs" />
-    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\IPtLogger.cs" />
     <Compile Include="PdfServices\PdfArchiver.cs" />
     <Compile Include="PdfServices\PdfCodeEnhancer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logging\PtLogger.cs" />
+    <Compile Include="Logging\PtFileLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

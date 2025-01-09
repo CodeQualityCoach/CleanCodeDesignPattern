@@ -7,9 +7,9 @@ namespace PdfTools.Commands
 {
     public class DownloadCommand : ICommand
     {
-        private readonly ILogger _logger;
+        private readonly IPtLogger _logger;
 
-        public DownloadCommand(ILogger logger)
+        public DownloadCommand(IPtLogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

@@ -1,11 +1,6 @@
 ﻿namespace PdfTools.Logging
 {
-    public interface ILogger
-    {
-        void Trace(string message);
-    }
-
-    public class ConsoleLogger : ILogger
+    public class ConsoleLogger : IPtLogger
     {
         public void Trace(string message)
         {

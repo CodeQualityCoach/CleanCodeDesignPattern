@@ -9,9 +9,9 @@ namespace PdfTools.Commands
 {
     public class CombineCommand : ICommand
     {
-        private readonly ILogger _logger;
+        private readonly IPtLogger _logger;
 
-        public CombineCommand(ILogger logger)
+        public CombineCommand(IPtLogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

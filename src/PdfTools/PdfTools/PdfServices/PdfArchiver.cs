@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using iTextSharp.text.pdf;
+using PdfTools.Logging;
 using QRCoder;
 using Image = iTextSharp.text.Image;
 
@@ -11,11 +12,15 @@ namespace PdfTools.PdfServices
     public class PdfArchiver
     {
         private readonly string _tempFile;
+        private readonly IPtLogger _logger;
 
-        public PdfArchiver()
+        //public PdfArchiver(IPtLogger logger) // statisch (aus Prozessicht)
+        public PdfArchiver(IPtLoggerFactory loggerFactory) // dynamischen Logger
         {
             _tempFile = Path.GetTempFileName();
+            _logger = loggerFactory.CreateLogger();
         }
+
         public void Archive(string url)
         {
             var client = new HttpClient();

@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using PdfTools.Commands;
-
-// Frage: Warum so etwas komisches hier? Was bedeutet das?
-using ILogger = PdfTools.Logging.ILogger;
+using PdfTools.Logging;
 
 namespace PdfTools
 {
     public class Program
     {
-        //private static ILogger _logger;
-        private static ILogger _logger;
+        //private static IPtLogger _logger;
+        private static IPtLogger _logger;
 
         public static void Main(string[] args)
         {
-            // todo RW: fix me
-            //_logger = NLog.LogManager.GetCurrentClassLogger();
-            _logger = new PdfTools.Logging.ConsoleLogger();
-
+            // logik für Objekterstellung
+            var factory = new PtLoggerFactory();
+            _logger = factory.CreateLogger();
 
 #if DEBUG
             // just a hack in case you hit play in VS
@@ -43,7 +41,7 @@ namespace PdfTools
                 new AddCodeCommand(),
                 new ArchiveCommand(),
                 new CombineCommand(_logger),
-                new CreateCommand(_logger)
+                new CreateCommand(factory.CreateLogger())
             };
 
             // we solve a problem:
@@ -60,6 +58,21 @@ namespace PdfTools
 #if DEBUG
             Console.ReadKey();
 #endif
+        }
+    }
+
+    public interface IPtLoggerFactory
+    {
+        IPtLogger CreateLogger();
+    }
+
+    public class PtLoggerFactory : IPtLoggerFactory
+    {
+        public IPtLogger CreateLogger()
+        {
+            var dailyFileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
+            var fileName = Path.Combine(Path.GetTempPath(), dailyFileName);
+            return new PtFileLogger(fileName);
         }
     }
 }

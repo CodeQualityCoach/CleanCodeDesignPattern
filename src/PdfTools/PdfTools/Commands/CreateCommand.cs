@@ -8,9 +8,9 @@ namespace PdfTools.Commands
 {
     public class CreateCommand : ICommand
     {
-        private readonly ILogger _logger;
+        private readonly IPtLogger _logger;
 
-        public CreateCommand(ILogger logger)
+        public CreateCommand(IPtLogger logger)
         {
             // hack: Frage: Kennt jemand diesen Code?
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
