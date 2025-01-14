@@ -4,6 +4,7 @@ using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using PdfTools.Logging;
+using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Commands
 {

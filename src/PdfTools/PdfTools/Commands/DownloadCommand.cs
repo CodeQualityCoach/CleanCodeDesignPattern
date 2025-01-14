@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Http;
 using PdfTools.Logging;
+using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Commands
 {

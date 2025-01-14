@@ -1,6 +1,4 @@
-﻿using PdfTools.Logging;
-
-namespace PdfTools
+﻿namespace PdfTools.Logging.Contracts
 {
     public interface IPtLoggerFactory
     {

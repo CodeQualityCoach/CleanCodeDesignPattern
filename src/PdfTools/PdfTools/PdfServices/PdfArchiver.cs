@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using iTextSharp.text.pdf;
 using PdfTools.Logging;
+using PdfTools.Logging.Contracts;
 using QRCoder;
 using Image = iTextSharp.text.Image;
 

@@ -3,6 +3,7 @@ using System.IO;
 using FSharp.Markdown;
 using FSharp.Markdown.Pdf;
 using PdfTools.Logging;
+using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Commands
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using PdfTools.Logging;
+using PdfTools.Logging.Contracts;
 
 namespace PdfTools
 {

@@ -1,4 +1,6 @@
-﻿namespace PdfTools.Logging
+﻿using PdfTools.Logging.Contracts;
+
+namespace PdfTools.Logging
 {
     public class ConsoleLogger : IPtLogger
     {

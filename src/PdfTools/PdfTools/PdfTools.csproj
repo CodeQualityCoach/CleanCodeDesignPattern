@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>PdfTools</RootNamespace>
     <AssemblyName>PdfTools</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,9 +95,6 @@
     <Reference Include="MigraDoc.RtfRendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.0.5\lib\net46\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="NSubstitute, Version=4.2.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\packages\NSubstitute.4.2.2\lib\net46\NSubstitute.dll</HintPath>
     </Reference>
@@ -146,10 +144,8 @@
     <Compile Include="Commands\EmptyCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\BatchCommand.cs" />
-    <Compile Include="Logging\IPtLoggerFactory.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\EmptyPtLogger.cs" />
-    <Compile Include="Logging\IPtLogger.cs" />
     <Compile Include="PdfServices\PdfArchiver.cs" />
     <Compile Include="PdfServices\PdfCodeEnhancer.cs" />
     <Compile Include="Program.cs" />
@@ -177,7 +173,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PdfTools.Logging.Contracts\PdfTools.Logging.Contracts.csproj">
+      <Project>{9909F956-8952-4084-A553-13CF9157404F}</Project>
+      <Name>PdfTools.Logging.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PdfTools.Logging.NLog\PdfTools.Logging.NLog.csproj">
+      <Project>{E32871D3-490A-4746-81FC-549067C79E3F}</Project>
+      <Name>PdfTools.Logging.NLog</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

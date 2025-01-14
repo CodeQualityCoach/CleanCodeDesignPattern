@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using PdfTools.Commands;
+using PdfTools.Logging.Contracts;
+using PdfTools.Logging.NLog;
 using PdfTools.PdfServices;
 
 namespace PdfTools.ServiceLocator
@@ -12,7 +14,9 @@ namespace PdfTools.ServiceLocator
     {
         // Singleton implementation - lazy instead of eager initialization
         private static readonly Lazy<IPtLoggerFactory> LoggerFactory
-            = new Lazy<IPtLoggerFactory>(() => new PtLoggerFactory());
+            //= new Lazy<IPtLoggerFactory>(() => new PtLoggerFactory());
+            = new Lazy<IPtLoggerFactory>(() => new PtNlogLoggerFactory());
+
         public static IEnumerable<ICommand> GetCommands()
         {
             // logik für Objekterstellung
