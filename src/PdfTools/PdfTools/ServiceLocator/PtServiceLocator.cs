@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PdfTools.Commands;
+using PdfTools.Decorator;
 using PdfTools.Logging.Contracts;
 using PdfTools.Logging.NLog;
 using PdfTools.PdfServices;
@@ -23,13 +24,13 @@ namespace PdfTools.ServiceLocator
             var logger = LoggerFactory.Value.CreateLogger();
 
             return new List<ICommand>() {
-                new BatchCommand("daac", new DownloadCommand(logger), new AddCodeCommand()),
-                new DownloadAndAddCodeCommand(new DownloadCommand(logger), new AddCodeCommand()),
-                new DownloadCommand(logger),
-                new AddCodeCommand(),
-                new ArchiveCommand(new PdfArchiver(LoggerFactory.Value)),
-                new CombineCommand(logger),
-                new CreateCommand(LoggerFactory.Value.CreateLogger())
+                new BatchCommand("daac", new DownloadCommand(logger, new HttpClientFacade()), new AddCodeCommand(LoggerFactory.Value)),
+                new DownloadAndAddCodeCommand(new DownloadCommand(logger, new HttpClientFacade()), new AddCodeCommand(LoggerFactory.Value)),
+                new LoggingCommandDecorator( new DownloadCommand(logger, new HttpClientFacade()), logger),
+                new LoggingCommandDecorator(new AddCodeCommand(LoggerFactory.Value), logger),
+                new LoggingCommandDecorator( new ArchiveCommand(new PdfArchiver(LoggerFactory.Value, new HttpClientFacade())), logger),
+                new LoggingCommandDecorator( new CombineCommand(logger, null), logger),
+                new LoggingCommandDecorator(  new CreateCommand(LoggerFactory.Value.CreateLogger()), logger)
             };
         }
 

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http;
 using PdfTools.Logging;
 using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Commands
 {
-    public class DownloadCommand : ICommand
+    public class DownloadCommand : ICommand, IDownloadCommand
     {
         private readonly IPtLogger _logger;
+        private readonly IHttpClient _client;
 
-        public DownloadCommand(IPtLogger logger)
+        public DownloadCommand(IPtLogger logger, IHttpClient client)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _client = client ?? throw new ArgumentNullException(nameof(client));
+
         }
 
         public bool CanExecute(string[] context)
@@ -22,11 +24,12 @@ namespace PdfTools.Commands
 
         public void Execute(string[] context)
         {
-            var client = new HttpClient();
-            var response = client.GetAsync(context[1]).Result;
-            var pdf = response.Content.ReadAsByteArrayAsync().Result;
-
+            var pdf = _client.GetPdf(context[1]);
             File.WriteAllBytes(context[2], pdf);
         }
+    }
+
+    public interface IDownloadCommand : ICommand
+    {
     }
 }

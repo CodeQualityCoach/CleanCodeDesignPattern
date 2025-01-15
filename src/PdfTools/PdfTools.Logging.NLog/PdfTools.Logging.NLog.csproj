@@ -49,6 +49,7 @@
     <Compile Include="PtNlogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PtNlogLoggerFactory.cs" />
+    <Compile Include="SuperMath\SuperPrime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,5 +60,6 @@
       <Name>PdfTools.Logging.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

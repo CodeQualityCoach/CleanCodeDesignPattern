@@ -8,11 +8,31 @@ using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Commands
 {
+    public interface IPtServiceProvider
+    {
+        TService GetService<TService>();
+    }
+
+    public class PtServiceProviderAdapter : IPtServiceProvider
+    {
+        private readonly IServiceProvider _container;
+
+        public PtServiceProviderAdapter(IServiceProvider container)
+        {
+            _container = container;
+        }
+        public TService GetService<TService>()
+        {
+            return (TService)_container.GetService(typeof(TService));
+        }
+    }
+
+
     public class CombineCommand : ICommand
     {
         private readonly IPtLogger _logger;
 
-        public CombineCommand(IPtLogger logger)
+        public CombineCommand(IPtLogger logger, IPtServiceProvider container)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

@@ -2,7 +2,9 @@
 using System.Linq;
 using Castle.Core.Logging;
 using PdfTools.Commands;
+using PdfTools.Decorator;
 using PdfTools.Logging;
+using PdfTools.Logging.NLog.SuperMath;
 using PdfTools.ServiceLocator;
 
 namespace PdfTools
@@ -27,13 +29,13 @@ namespace PdfTools
                 Console.WriteLine(arg);
             }
 
-            var commands = PtServiceLocator.GetCommands();
+            var commands = PtDiServiceLocator.GetCommands();
 
             var theAction = commands.FirstOrDefault(c => c.CanExecute(args))
                             ?? new EmptyCommand();
 
             // Logge das gefundene Command fürs Tracing
-            var factory = PtServiceLocator.GetLoggerFactory();
+            var factory = PtDiServiceLocator.GetLoggerFactory();
             var logger = factory.CreateLogger();
             logger.Trace("Found Action: " + theAction.GetType().FullName);
 

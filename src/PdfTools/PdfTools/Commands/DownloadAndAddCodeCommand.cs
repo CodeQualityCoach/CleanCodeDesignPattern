@@ -7,7 +7,7 @@ namespace PdfTools.Commands
         private readonly ICommand _downloadCommand;
         private readonly ICommand _addCodeCommand;
 
-        public DownloadAndAddCodeCommand(ICommand downloadCommand, ICommand addCodeCommand)
+        public DownloadAndAddCodeCommand(IDownloadCommand downloadCommand, IAddCodeCommand addCodeCommand)
         {
             this._downloadCommand = downloadCommand;
             this._addCodeCommand = addCodeCommand;

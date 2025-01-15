@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using iTextSharp.text.pdf;
+using PdfTools.Commands;
 using PdfTools.Logging;
 using PdfTools.Logging.Contracts;
 using QRCoder;
@@ -14,15 +16,15 @@ namespace PdfTools.PdfServices
     {
         private readonly string _tempFile;
         private readonly IPtLogger _logger;
-        private readonly IPtWebReader _ptWebReader;
+        private readonly IHttpClient _ptWebReader;
 
         //public PdfArchiver(IPtLogger logger) // statisch (aus Prozessicht)
-        public PdfArchiver(IPtLoggerFactory loggerFactory, IPtWebReader ptWebReader = null) // dynamischen Logger
+        public PdfArchiver(IPtLoggerFactory loggerFactory, IHttpClient ptWebReader)
         {
+            _ptWebReader = ptWebReader ?? throw new ArgumentNullException(nameof(ptWebReader));
+          
             _tempFile = Path.GetTempFileName();
             _logger = loggerFactory.CreateLogger();
-
-            _ptWebReader = ptWebReader ?? new PtWebReader();
         }
 
         public void Archive(string url)
@@ -64,20 +66,5 @@ namespace PdfTools.PdfServices
         {
             File.Copy(_tempFile, destFile, true);
         }
-    }
-
-    public class PtWebReader : IPtWebReader
-    {
-        public byte[] GetPdf(string url)
-        {
-            var client = new HttpClient();
-            var response = client.GetAsync(url).Result;
-            return response.Content.ReadAsByteArrayAsync().Result;
-        }
-    }
-
-    public interface IPtWebReader
-    {
-        byte[] GetPdf(string url);
     }
 }

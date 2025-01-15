@@ -10,9 +10,16 @@ namespace PdfTools.Logging.NLog
 {
     internal class PtNlogLogger : IPtLogger
     {
+        private readonly ILogger _logger;
+
+        public PtNlogLogger(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public void Trace(string message)
         {
-            LogManager.GetCurrentClassLogger().Trace(message);
+            _logger.Trace(message);
         }
     }
 }

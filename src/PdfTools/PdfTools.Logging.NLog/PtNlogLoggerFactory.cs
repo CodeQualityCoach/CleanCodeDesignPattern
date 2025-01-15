@@ -1,4 +1,5 @@
-﻿using PdfTools.Logging.Contracts;
+﻿using NLog;
+using PdfTools.Logging.Contracts;
 
 namespace PdfTools.Logging.NLog
 {
@@ -6,7 +7,7 @@ namespace PdfTools.Logging.NLog
     {
         public IPtLogger CreateLogger()
         {
-            return new PtNlogLogger();
+            return new PtNlogLogger(LogManager.GetCurrentClassLogger());
         }
     }
 }
