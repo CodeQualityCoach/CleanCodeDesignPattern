@@ -35,6 +35,7 @@
             button3 = new Button();
             helloRalfButton = new Button();
             editUserButton = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // button1
@@ -101,11 +102,21 @@
             editUserButton.Text = "Edit User";
             editUserButton.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(326, 90);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 7;
+            label1.Text = "label1";
+            // 
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(label1);
             Controls.Add(editUserButton);
             Controls.Add(helloRalfButton);
             Controls.Add(button3);
@@ -114,7 +125,7 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Margin = new Padding(3, 2, 3, 2);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "Form1";
             ResumeLayout(false);
             PerformLayout();
@@ -129,5 +140,6 @@
         private Button button3;
         private Button helloRalfButton;
         private Button editUserButton;
+        private Label label1;
     }
 }

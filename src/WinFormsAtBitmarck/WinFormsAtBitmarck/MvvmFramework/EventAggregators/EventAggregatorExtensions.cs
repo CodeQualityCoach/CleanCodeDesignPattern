@@ -15,9 +15,9 @@ namespace WinFormsAtBitmarck.MvvmFramework.EventAggregators
         /// <param name="eventAggregator">The event aggregator.</param>
         /// <param name = "message">The message instance.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public static Task Publish(this IEventAggregator eventAggregator, object message)
+        public static void Publish(this IEventAggregator eventAggregator, object message)
         {
-            return eventAggregator.PublishAsync(message, CancellationToken.None);
+            eventAggregator.PublishAsync(message, CancellationToken.None).Wait();
         }
     }
 }

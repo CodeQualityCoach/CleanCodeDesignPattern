@@ -49,9 +49,17 @@ public class MainFormModel : IFormModel, INotifyPropertyChanged
         }
     }
 
+
+
+
     public void Save()
     {
-        _eventAggregator.Publish(new LogMessage() { Message = $"{_dateTime.Now}\t{_greetings.GetGreeting(_dateTime)} {this.Name}" });
+        _eventAggregator.Publish(
+            new LogMessage() { Message = $"{_dateTime.Now}\t{_greetings.GetGreeting(_dateTime)} {this.Name}" }
+        );
+        _eventAggregator.Publish(
+            new LogMessage() { Message = $"{_dateTime.Now}\t{_greetings.GetGreeting(_dateTime)} {this.Name}" }
+        );
         MessageBox.Show($"{_greetings.GetGreeting(_dateTime)} {Name}");
     }
 

@@ -1,11 +1,13 @@
 using WinFormsAtBitmarck.Exceptions;
 using WinFormsAtBitmarck.MvvmFramework;
+using WinFormsAtBitmarck.MvvmFramework.EventAggregators;
 using WinFormsAtBitmarck.Ui.EditUser;
 using WinFormsAtBitmarck.Ui.Main;
+using WinFormsAtBitmarck.Ui.Protocol;
 
 namespace WinFormsAtBitmarck
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IHandle<LogMessage>
     {
         [Obsolete("only for design time")]
         public MainForm()
@@ -13,8 +15,13 @@ namespace WinFormsAtBitmarck
             InitializeComponent();
         }
 
-        public MainForm(MainFormModel mainFormModel, IWindowManager windowManager) : this()
+        public MainForm(
+            MainFormModel mainFormModel, 
+            IWindowManager windowManager,
+            IEventAggregator eventAggregator) : this()
         {
+
+            eventAggregator.Subscribe(this);
 
             helloRalfButton.Command = new FormModelAsParameterCommandDecorator(new HelloRalfCommand(), mainFormModel);
 
@@ -45,6 +52,12 @@ namespace WinFormsAtBitmarck
             button1.Click += (sender, args) => mainFormModel.Save();
             button3.Command = new RelayCommand(mainFormModel.OpenProtocolForm, (ctx) => true);
             textBox2.DataBindings.Add("Text", mainFormModel, nameof(mainFormModel.Name), true, DataSourceUpdateMode.OnPropertyChanged);
+        }
+
+        public Task HandleAsync(LogMessage message, CancellationToken cancellationToken)
+        {
+            this.label1.Text = message.Message;
+            return Task.CompletedTask;
         }
     }
 }

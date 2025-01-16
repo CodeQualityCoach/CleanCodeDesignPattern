@@ -6,7 +6,7 @@ using WinFormsAtBitmarck.MvvmFramework.EventAggregators;
 
 namespace WinFormsAtBitmarck.Ui.Protocol;
 
-public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>
+public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>, IHandle<ErrorMessage>
 {
     private readonly CloseFormCommand _closeFormCommand;
     private readonly IEventAggregator _eventAggregator;
@@ -49,6 +49,11 @@ public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>
     public Task HandleAsync(LogMessage message, CancellationToken cancellationToken)
     {
         Log = string.Join(Environment.NewLine, message.Message, Log);
+        return Task.CompletedTask;
+    }
+
+    public Task HandleAsync(ErrorMessage message, CancellationToken cancellationToken)
+    {
         return Task.CompletedTask;
     }
 }
