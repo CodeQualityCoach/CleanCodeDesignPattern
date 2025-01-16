@@ -1,8 +1,14 @@
-using Caliburn.Micro;
+using System.Collections;
+using System.Windows.Forms.Design;
 using Microsoft.Extensions.DependencyInjection;
-using WinFormsAtBitmarck.Data;
+using WinFormsAtBitmarck.Core.Logging;
+using WinFormsAtBitmarck.Core.Services;
 using WinFormsAtBitmarck.Exceptions;
-using WinFormsAtBitmarck.Models;
+using WinFormsAtBitmarck.MvvmFramework;
+using WinFormsAtBitmarck.MvvmFramework.EventAggregators;
+using WinFormsAtBitmarck.Ui.EditUser;
+using WinFormsAtBitmarck.Ui.Main;
+using WinFormsAtBitmarck.Ui.Protocol;
 using WinFormsAtBitmarck.Views;
 
 namespace WinFormsAtBitmarck
@@ -21,33 +27,107 @@ namespace WinFormsAtBitmarck
 
             // Initialize Dependency Injection
             var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            serviceCollection.ConfigureMvvmFramework();
+            serviceCollection.ConfigureUserInterface();
+            serviceCollection.ConfigureServices();
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // Initialize Application
-            var mainView = serviceProvider.GetService<Form1>() ?? throw new MainViewNotFoundException();
+            var mainView = serviceProvider.GetService<MainForm>() ?? throw new MainViewNotFoundException();
             Application.Run(mainView);
         }
 
-        private static void ConfigureServices(IServiceCollection services)
+        #region service configurations
+
+        private static void ConfigureMvvmFramework(this IServiceCollection services)
         {
             services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<IEventAggregator, EventAggregator>();
+            services.AddSingleton<IBmLogger, TraceLogger>();
 
+            services.AddTransient<CloseFormCommand>();
+
+        }
+        private static void ConfigureUserInterface(this IServiceCollection services)
+        {
             // Register services and view models
-            services.AddTransient<Form1ViewModel>();
-            services.AddTransient<ProtocollFormViewModel>();
+            services.AddTransient<MainFormModel>();
+            services.AddTransient<EditFormModel>();
+            services.AddTransient<ProtocolFormModel>();
 
+            services.AddTransient<MainForm>();
+            services.AddTransient<EditForm>();
+            services.AddTransient<ProtocolForm>();
+        }
+        private static void ConfigureServices(this IServiceCollection services)
+        {
+            // additional services
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddSingleton<IGreetingRepository, GreetingRepository>();
-
-            services.AddTransient<Form1>();
-            services.AddTransient<ProtocollForm>();
-
-            // event aggregator
-            services.AddSingleton<IEventAggregator, EventAggregator>();
 
             // this is the mediatr registration
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         }
+
+        #endregion
+    }
+
+    public class UiServices : IUIService
+    {
+        public bool CanShowComponentEditor(object component)
+        {
+            return false;
+        }
+
+        public IWin32Window GetDialogOwnerWindow()
+        {
+            return null;
+        }
+
+        public void SetUIDirty()
+        {
+        }
+
+        public bool ShowComponentEditor(object component, IWin32Window parent)
+        {
+            return false;
+        }
+
+        public DialogResult ShowDialog(Form form)
+        {
+            return DialogResult.None;
+        }
+
+        public void ShowError(string message)
+        {
+        }
+
+        public void ShowError(Exception ex)
+        {
+        }
+
+        public void ShowError(Exception ex, string message)
+        {
+        }
+
+        public void ShowMessage(string message)
+        {
+        }
+
+        public void ShowMessage(string message, string caption)
+        {
+        }
+
+        public DialogResult ShowMessage(string message, string caption, MessageBoxButtons buttons)
+        {
+            return DialogResult.None;
+        }
+
+        public bool ShowToolWindow(Guid toolWindow)
+        {
+            return false;
+        }
+
+        public IDictionary Styles { get; }
     }
 }

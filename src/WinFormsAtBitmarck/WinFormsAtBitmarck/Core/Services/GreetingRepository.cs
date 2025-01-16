@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormsAtBitmarck.Data
+namespace WinFormsAtBitmarck.Core.Services
 {
     public class GreetingRepository : IGreetingRepository
     {

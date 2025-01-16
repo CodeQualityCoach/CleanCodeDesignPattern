@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Caliburn.Micro
+namespace WinFormsAtBitmarck.MvvmFramework.EventAggregators
 {
     /// <summary>
     /// Enables loosely-coupled publication of and subscription to events.
@@ -21,8 +21,7 @@ namespace Caliburn.Micro
         /// Subscribes an instance to all events declared through implementations of <see cref = "IHandle{T}" />
         /// </summary>
         /// <param name = "subscriber">The instance to subscribe for event publication.</param>
-        /// <param name = "marshal">Allows the subscriber to provide a custom thread marshaller for the message subscription.</param>
-        void Subscribe(object subscriber, Func<Func<Task>, Task> marshal);
+        void Subscribe(object subscriber);
 
         /// <summary>
         /// Unsubscribes the instance from all events.
@@ -34,9 +33,7 @@ namespace Caliburn.Micro
         /// Publishes a message.
         /// </summary>
         /// <param name = "message">The message instance.</param>
-        /// <param name = "marshal">Allows the publisher to provide a custom thread marshaller for the message publication.</param>
-        /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        Task PublishAsync(object message, Func<Func<Task>, Task> marshal, CancellationToken cancellationToken = default);
+        Task PublishAsync(object message, CancellationToken cancellationToken);
     }
 }

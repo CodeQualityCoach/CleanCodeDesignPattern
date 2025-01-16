@@ -1,6 +1,6 @@
 ﻿namespace WinFormsAtBitmarck
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -33,6 +33,8 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             button3 = new Button();
+            helloRalfButton = new Button();
+            editUserButton = new Button();
             SuspendLayout();
             // 
             // button1
@@ -81,11 +83,31 @@
             button3.Text = "Open Log";
             button3.UseVisualStyleBackColor = true;
             // 
+            // helloRalfButton
+            // 
+            helloRalfButton.Location = new Point(436, 47);
+            helloRalfButton.Name = "helloRalfButton";
+            helloRalfButton.Size = new Size(75, 23);
+            helloRalfButton.TabIndex = 5;
+            helloRalfButton.Text = "Hello Ralf";
+            helloRalfButton.UseVisualStyleBackColor = true;
+            // 
+            // editUserButton
+            // 
+            editUserButton.Location = new Point(183, 180);
+            editUserButton.Name = "editUserButton";
+            editUserButton.Size = new Size(75, 23);
+            editUserButton.TabIndex = 6;
+            editUserButton.Text = "Edit User";
+            editUserButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 338);
+            Controls.Add(editUserButton);
+            Controls.Add(helloRalfButton);
             Controls.Add(button3);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
@@ -105,5 +127,7 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private Button button3;
+        private Button helloRalfButton;
+        private Button editUserButton;
     }
 }

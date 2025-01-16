@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Caliburn.Micro
+namespace WinFormsAtBitmarck.MvvmFramework.EventAggregators
 {
     /// <summary>
     /// Denotes a class which can handle a particular type of message.

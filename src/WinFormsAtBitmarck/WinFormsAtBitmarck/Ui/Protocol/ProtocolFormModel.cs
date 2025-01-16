@@ -1,19 +1,28 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Caliburn.Micro;
-using MediatR;
+using System.Windows.Input;
+using WinFormsAtBitmarck.MvvmFramework;
+using WinFormsAtBitmarck.MvvmFramework.EventAggregators;
 
-namespace WinFormsAtBitmarck.Models;
+namespace WinFormsAtBitmarck.Ui.Protocol;
 
-public class ProtocollFormViewModel : INotifyPropertyChanged, IHandle<LogMessage>
+public class ProtocolFormModel : INotifyPropertyChanged, IHandle<LogMessage>
 {
+    private readonly CloseFormCommand _closeFormCommand;
     private readonly IEventAggregator _eventAggregator;
 
-    public ProtocollFormViewModel(IEventAggregator eventAggregator)
+    [Obsolete("Only for design time", true)]
+    public ProtocolFormModel()
     {
+        
+    }
+
+    public ProtocolFormModel(CloseFormCommand closeFormCommand, IEventAggregator eventAggregator)
+    {
+        _closeFormCommand = closeFormCommand ?? throw new ArgumentNullException(nameof(closeFormCommand));
         _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
-        _eventAggregator.SubscribeOnUIThread(this);
+        _eventAggregator.Subscribe(this);
     }
 
     private string _log = string.Empty;
@@ -24,6 +33,8 @@ public class ProtocollFormViewModel : INotifyPropertyChanged, IHandle<LogMessage
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    public ICommand CloseWindow => _closeFormCommand;
+
     public string Log
     {
         get => _log;
@@ -32,7 +43,7 @@ public class ProtocollFormViewModel : INotifyPropertyChanged, IHandle<LogMessage
             if (value == _log) return;
             _log = value;
             OnPropertyChanged();
-        } 
+        }
     }
 
     public Task HandleAsync(LogMessage message, CancellationToken cancellationToken)
@@ -40,9 +51,4 @@ public class ProtocollFormViewModel : INotifyPropertyChanged, IHandle<LogMessage
         Log = string.Join(Environment.NewLine, message.Message, Log);
         return Task.CompletedTask;
     }
-}
-
-public class LogMessage : INotification
-{
-    public string Message { get; set; }
 }

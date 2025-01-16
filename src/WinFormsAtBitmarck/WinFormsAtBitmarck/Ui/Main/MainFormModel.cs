@@ -1,13 +1,16 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Caliburn.Micro;
 using MediatR;
-using WinFormsAtBitmarck.Data;
+using WinFormsAtBitmarck.Core.Services;
+using WinFormsAtBitmarck.MvvmFramework;
+using WinFormsAtBitmarck.MvvmFramework.EventAggregators;
+using WinFormsAtBitmarck.Ui.EditUser;
+using WinFormsAtBitmarck.Ui.Protocol;
 using WinFormsAtBitmarck.Views;
 
-namespace WinFormsAtBitmarck.Models;
+namespace WinFormsAtBitmarck.Ui.Main;
 
-public class Form1ViewModel : INotifyPropertyChanged
+public class MainFormModel : IFormModel, INotifyPropertyChanged
 {
     private readonly IGreetingRepository _greetings;
     private readonly IDateTimeProvider _dateTime;
@@ -15,9 +18,14 @@ public class Form1ViewModel : INotifyPropertyChanged
     private readonly IEventAggregator _eventAggregator;
     private string _name;
 
-    public Form1ViewModel(
-        IGreetingRepository greetings, 
-        IDateTimeProvider dateTime, 
+    [Obsolete("only for design time")]
+    public MainFormModel()
+    {
+        
+    }
+    public MainFormModel(
+        IGreetingRepository greetings,
+        IDateTimeProvider dateTime,
         IWindowManager windowManager,
         IEventAggregator eventAggregator)
     {
@@ -26,7 +34,7 @@ public class Form1ViewModel : INotifyPropertyChanged
         _windowManager = windowManager ?? throw new ArgumentNullException(nameof(windowManager));
         _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
-        Name =  "Thomas";
+        Name = "Thomas";
     }
 
     public string Name
@@ -36,16 +44,23 @@ public class Form1ViewModel : INotifyPropertyChanged
         {
             if (value == _name) return;
             _name = value;
-            OnPropertyChanged();
+            OnPropertyChanged("Name");
             OnPropertyChanged(nameof(CanDoSomethingElse));
         }
     }
 
     public void Save()
     {
-        _eventAggregator.PublishOnUIThreadAsync(new LogMessage() {Message = $"{_dateTime.Now}\t{_greetings.GetGreeting(_dateTime)} {this.Name}"});
-        MessageBox.Show($"{_greetings.GetGreeting(_dateTime)} {this.Name}");
+        _eventAggregator.Publish(new LogMessage() { Message = $"{_dateTime.Now}\t{_greetings.GetGreeting(_dateTime)} {this.Name}" });
+        MessageBox.Show($"{_greetings.GetGreeting(_dateTime)} {Name}");
     }
+
+
+
+
+
+
+
 
     public void DoSomethingElse(object context)
     {
@@ -57,10 +72,23 @@ public class Form1ViewModel : INotifyPropertyChanged
         return !string.IsNullOrWhiteSpace(Name);
     }
 
+
+
+
+
+
+
+
     public void OpenProtocolForm(object context)
     {
         // irgendeine Abhängigkeit wird benötigt ... in der Regel das ViewModel
-        _windowManager.Show<ProtocollForm>();
+        _windowManager.Show<ProtocolForm>();
+    }
+
+    public void OpenEditForm(object context)
+    {
+        // irgendeine Abhängigkeit wird benötigt ... in der Regel das ViewModel
+        _windowManager.Show<EditForm>();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -69,4 +97,6 @@ public class Form1ViewModel : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    public IFormModel FormModel => this;
 }

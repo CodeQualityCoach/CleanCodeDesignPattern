@@ -1,4 +1,4 @@
-﻿namespace WinFormsAtBitmarck.Data;
+﻿namespace WinFormsAtBitmarck.Core.Services;
 
 public class DateTimeProvider : IDateTimeProvider
 {
